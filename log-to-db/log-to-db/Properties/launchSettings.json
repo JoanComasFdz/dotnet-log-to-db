@@ -2,7 +2,7 @@
   "profiles": {
     "log-to-db": {
       "commandName": "Project",
-      "commandLineArgs": "N:\\support-cases"
+      "commandLineArgs": "D:\\logs"
     }
   }
 }

@@ -63,12 +63,23 @@ internal static class Database
         cmdCreateIndexes.ExecuteNonQuery();
     }
 
-    public static int GetLogEntriesCount()
+    public static int GetLogEntriesCount(string logFilePath)
     {
         using var conn = new NpgsqlConnection(ConnectionString);
         conn.Open();
 
-        using var cmd = new NpgsqlCommand("SELECT COUNT(*) FROM log", conn);
+        var fileName = Path.GetFileName(logFilePath);
+        using var cmd = new NpgsqlCommand($"SELECT COUNT(*) FROM log WHERE file_name = '{fileName}'", conn);
         return Convert.ToInt32(cmd.ExecuteScalar());
+    }
+
+    internal static int RemoveLogEntriesForFile(string logFilePath)
+    {
+        using var conn = new NpgsqlConnection(ConnectionString);
+        conn.Open();
+
+        var fileName = Path.GetFileName(logFilePath);
+        using var cmd = new NpgsqlCommand($"DELETE FROM log WHERE file_name = '{fileName}'", conn);
+        return Convert.ToInt32(cmd.ExecuteNonQuery());
     }
 }

@@ -15,12 +15,19 @@ foreach (var logFilePath in logFiles)
     try
     {
         Console.WriteLine($"Processing file: {logFilePath}");
+
+        if (Database.GetLogEntriesCount(logFilePath) > 0)
+        {
+            var deletedEntries = Database.RemoveLogEntriesForFile(logFilePath);
+            Console.WriteLine($"Removed {deletedEntries} entries already stored for for {logFilePath}.");
+        }
+
         var cronoFile = Stopwatch.StartNew();
 
         LogFileInserter.ProcessLogFile(logFilePath);
 
         cronoFile.Stop();
-        int insertedRows = Database.GetLogEntriesCount();  // Adjust this method if it needs to count rows per file.
+        int insertedRows = Database.GetLogEntriesCount(logFilePath);  // Adjust this method if it needs to count rows per file.
         Console.WriteLine($"Inserted {insertedRows} rows from {Path.GetFileName(logFilePath)} in {cronoFile.Elapsed.ToEasyTime()}.");
     }
     catch (Exception ex)
