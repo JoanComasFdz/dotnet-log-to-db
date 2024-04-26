@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using log_to_db;
+using System.Diagnostics;
 
 Console.WriteLine("Log to PostgreSQL - Joan Comas, 2024." + Environment.NewLine);
 

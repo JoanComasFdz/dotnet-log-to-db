@@ -2,6 +2,8 @@
 using System.Text;
 using Npgsql;
 
+namespace log_to_db;
+
 public static class LogFileInserter
 {
     private const int BatchSize = 500;

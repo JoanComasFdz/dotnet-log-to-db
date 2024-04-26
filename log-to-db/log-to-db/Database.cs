@@ -1,11 +1,13 @@
 ﻿using Npgsql;
 
+namespace log_to_db;
+
 internal static class Database
 {
     private static readonly string masterConnectionString = "Host=127.0.0.1; Username=postgres; Password=postgres;";
 
     public static string ConnectionString => masterConnectionString + " Database=logscannerdotnet";
-    
+
     public static void EnsureCreated()
     {
         using var nasterConn = new NpgsqlConnection(masterConnectionString);
@@ -59,7 +61,7 @@ internal static class Database
                 CREATE INDEX IF NOT EXISTS idx_log_level ON log (log_level);",
                 conn);
         cmdCreateIndexes.ExecuteNonQuery();
-    }    
+    }
 
     public static int GetLogEntriesCount()
     {

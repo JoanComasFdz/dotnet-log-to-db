@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 
+namespace log_to_db;
+
 internal static class LogLineParser
 {
     internal static LogEntry ParseLogEntry(string logLine)
@@ -19,8 +21,11 @@ internal static class LogLineParser
         if (startLogLevelIndex <= endThreadIdIndex) return LogEntry.Empty; // Basic error handling
 
         // Find the end of the log level by finding the space after the log level start
-        int endLogLevelIndex = spanLine.Slice(startLogLevelIndex).IndexOf(' ') + startLogLevelIndex;
+        int endLogLevelIndex = spanLine.Slice(startLogLevelIndex).IndexOf(" ") + startLogLevelIndex;
         if (endLogLevelIndex <= startLogLevelIndex) return LogEntry.Empty; // Basic error handling
+
+        int endLogLevelIndex2 = spanLine.Slice(endLogLevelIndex).IndexOf(" ");
+        if (endLogLevelIndex2 - endLogLevelIndex == 1) endLogLevelIndex = endLogLevelIndex2; // If there is a double space, use the second space as the end of the log level
 
         // Find the end of the component by finding the space after the log level end
         int endComponentIndex = spanLine.Slice(endLogLevelIndex).IndexOf(" - ") + endLogLevelIndex;
@@ -28,9 +33,9 @@ internal static class LogLineParser
 
         // Assigning segments to variables
         ReadOnlySpan<char> timestampSpan = spanLine.Slice(0, firstSpaceIndex);
-        ReadOnlySpan<char> threadIdSpan = spanLine.Slice(firstSpaceIndex + 1, endThreadIdIndex - firstSpaceIndex - 1);
+        ReadOnlySpan<char> threadIdSpan = spanLine.Slice(firstSpaceIndex + 2, endThreadIdIndex - firstSpaceIndex - 3);
         ReadOnlySpan<char> logLevelSpan = spanLine.Slice(startLogLevelIndex, endLogLevelIndex - startLogLevelIndex);
-        ReadOnlySpan<char> componentSpan = spanLine.Slice(endLogLevelIndex +1, endComponentIndex - endLogLevelIndex);
+        ReadOnlySpan<char> componentSpan = spanLine.Slice(endLogLevelIndex+2, endComponentIndex - endLogLevelIndex - 2);
         ReadOnlySpan<char> messageSpan = spanLine.Slice(endComponentIndex + 3);
 
         var timestamp = DateTime.ParseExact(timestampSpan.ToString(), "yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture, DateTimeStyles.None);
