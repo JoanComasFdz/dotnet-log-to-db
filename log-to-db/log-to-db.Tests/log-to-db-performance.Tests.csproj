@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>log_to_db.Tests</RootNamespace>
+    <RootNamespace>log_to_db_performance.Tests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\log-to-db\log-to-db.csproj" />
+    <ProjectReference Include="..\log-to-db\log-to-db-performance.csproj" />
   </ItemGroup>
 
   <ItemGroup>

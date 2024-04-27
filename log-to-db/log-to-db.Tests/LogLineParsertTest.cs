@@ -1,4 +1,4 @@
-namespace log_to_db.Tests;
+namespace log_to_db_performance.Tests;
 
 public class LogLineParsertTest
 {

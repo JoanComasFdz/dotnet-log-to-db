@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "log-to-db", "log-to-db\log-to-db.csproj", "{05942158-3571-42A0-90F0-BE276B231201}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "log-to-db-performance", "log-to-db\log-to-db-performance.csproj", "{05942158-3571-42A0-90F0-BE276B231201}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "log-to-db.Tests", "log-to-db.Tests\log-to-db.Tests.csproj", "{46C935DD-D47D-4CAD-8007-57660C1E6429}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "log-to-db-performance.Tests", "log-to-db.Tests\log-to-db-performance.Tests.csproj", "{46C935DD-D47D-4CAD-8007-57660C1E6429}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

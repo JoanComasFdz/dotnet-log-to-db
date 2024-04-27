@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace log_to_db;
+namespace log_to_db_performance;
 
 internal static class LogLineParser
 {

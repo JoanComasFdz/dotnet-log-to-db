@@ -1,8 +1,7 @@
-﻿using System.Globalization;
-using System.Text;
+﻿using System.Text;
 using Npgsql;
 
-namespace log_to_db;
+namespace log_to_db_performance;
 
 public static class LogFileInserter
 {

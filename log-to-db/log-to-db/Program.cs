@@ -1,4 +1,4 @@
-﻿using log_to_db;
+﻿using log_to_db_performance;
 using System.Diagnostics;
 
 Console.WriteLine("Log to PostgreSQL - Joan Comas, 2024." + Environment.NewLine);
