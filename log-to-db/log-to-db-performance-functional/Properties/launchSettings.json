@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "log-to-db-performance-functional": {
+        "commandName": "Project",
+        "commandLineArgs": "D:\\logs"
+    }
+  }
+}

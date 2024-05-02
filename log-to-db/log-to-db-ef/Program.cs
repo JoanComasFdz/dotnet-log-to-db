@@ -1,5 +1,6 @@
-﻿using log_to_db_performance;
-using Common;
+﻿using Common;
+using log_to_db_ef;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 Console.WriteLine("Log to PostgreSQL - Joan Comas, 2024." + Environment.NewLine);
@@ -22,57 +23,37 @@ if (logFiles.Length == 0)
 
 Console.WriteLine($"Found {logFiles.Length} log files in {directotyWithLogFiles}.{Environment.NewLine}");
 
-// Make sure the DB is ready
+// Check the database
 Console.WriteLine("Checking the database...");
-Database.EnsureCreated();
-using var conn = Database.OpenConnection();
+using var context = new LogDbContext();
+context.Database.Migrate();
 
 // Run
-const int BatchSize = 1000;
-string[] batch = new string[BatchSize];
-int currentIndex = 0;
-
 var cronoTotal = Stopwatch.StartNew();
 foreach (var logFilePath in logFiles)
 {
     try
     {
-        var logFileName = Path.GetFileName(logFilePath); 
-        Console.WriteLine($"Processing file: {logFileName}");
-        
-        var deletedEntries = Database.RemoveLogEntriesForFile(logFilePath);
+        var logFileName = Path.GetFileName(logFilePath);
+        Console.WriteLine($"Processing file: {logFilePath}");
+
+        var deletedEntries = context.DeleteLogEntries(logFileName);
         if (deletedEntries > 0)
-        {
+        {            
             Console.WriteLine($"Removed {deletedEntries} entries already stored for for {logFilePath}.");
         }
 
         var cronoFile = Stopwatch.StartNew();
 
-        using var reader = new StreamReader(logFilePath);       
-        string? line;
-        while ((line = reader.ReadLine()) != null)
-        {
-            var spanLine = line.AsSpan();
-            if (!LogLineValidator.LineStartsWithDateTime(spanLine))
-            {
-                continue;
-            }
-
-            batch[currentIndex++] = line;
-            if (currentIndex == BatchSize)
-            {
-                LogFileInserter.InsertLogEntries(logFileName, conn, batch, currentIndex);
-                currentIndex = 0;
-            }
-        }
-
-        if (currentIndex > 0)
-        {
-            LogFileInserter.InsertLogEntries(logFileName, conn, batch, currentIndex);
-        }
+        using var logFileStreamReader = new StreamReader(logFilePath);
+        logFileStreamReader.StreamLines()
+            .WhereLineIsRelevant()
+            .ToLogEntry(logFileName)
+            .InBatchesOf(500)
+            .InsertLogEntries(context);
 
         cronoFile.Stop();
-        var insertedRows = Database.GetLogEntriesCount(logFilePath);
+        int insertedRows = context.LogEntries.Count(x => x.file_name == logFileName);
         Console.WriteLine($"Inserted {insertedRows} rows from {Path.GetFileName(logFilePath)} in {cronoFile.Elapsed.ToEasyTime()}.{Environment.NewLine}");
     }
     catch (Exception ex)
@@ -80,7 +61,5 @@ foreach (var logFilePath in logFiles)
         Console.WriteLine($"Failed to process {logFilePath}. Error: {ex.Message}");
     }
 }
-
-conn.Close();
 cronoTotal.Stop();
 Console.WriteLine($"Done! Total time: {cronoTotal.Elapsed.ToEasyTime()}.");

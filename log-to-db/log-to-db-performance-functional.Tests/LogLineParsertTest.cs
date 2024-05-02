@@ -1,4 +1,4 @@
-namespace log_to_db_performance.Tests;
+namespace log_to_db_performance_functional.Tests;
 
 public class LogLineParsertTest
 {
@@ -9,7 +9,7 @@ public class LogLineParsertTest
 
         var logEntry = LogLineParser.ParseLogEntry(logLine);
             
-        var correctLogEntry = new LogEntry(
+        var correctLogEntry = LogEntry.Create(
             new DateTime(2021, 8, 1, 0, 0, 0, 0),
             "some-thread-1",
             "INFO",
@@ -17,11 +17,7 @@ public class LogLineParsertTest
             "Message"
             );
 
-        Assert.Equal(correctLogEntry.Timestamp, logEntry.Timestamp);
-        Assert.Equal(correctLogEntry.ThreadId.ToString(), logEntry.ThreadId.ToString());
-        Assert.Equal(correctLogEntry.LogLevel.ToString(), logEntry.LogLevel.ToString());
-        Assert.Equal(correctLogEntry.Component.ToString(), logEntry.Component.ToString());
-        Assert.Equal(correctLogEntry.Message.ToString(), logEntry.Message.ToString());
+        Assert.Equal(correctLogEntry, logEntry);
     }
 
     [Fact]
@@ -31,7 +27,7 @@ public class LogLineParsertTest
 
         var logEntry = LogLineParser.ParseLogEntry(logLine);
 
-        var correctLogEntry = new LogEntry(
+        var correctLogEntry = LogEntry.Create(
             new DateTime(2021, 8, 1, 0, 0, 0, 0),
             "some-thread-1",
             "INFO",
@@ -39,11 +35,7 @@ public class LogLineParsertTest
             "GET https://10.90.90.19:5555/api/v3/resource/AResult/slice?from=20240417000209&to=20240417000239"
             );
 
-        Assert.Equal(correctLogEntry.Timestamp, logEntry.Timestamp);
-        Assert.Equal(correctLogEntry.ThreadId.ToString(), logEntry.ThreadId.ToString());
-        Assert.Equal(correctLogEntry.LogLevel.ToString(), logEntry.LogLevel.ToString());
-        Assert.Equal(correctLogEntry.Component.ToString(), logEntry.Component.ToString());
-        Assert.Equal(correctLogEntry.Message.ToString(), logEntry.Message.ToString());
+        Assert.Equal(correctLogEntry, logEntry);
     }
 
     [Fact]
@@ -53,7 +45,7 @@ public class LogLineParsertTest
 
         var logEntry = LogLineParser.ParseLogEntry(logLine);
 
-        var correctLogEntry = new LogEntry(
+        var correctLogEntry = LogEntry.Create(
             new DateTime(2021, 8, 1, 0, 0, 0, 0),
             "reactor-http-nio-4",
             "ERROR",
@@ -61,11 +53,7 @@ public class LogLineParsertTest
             "[95f9bbe7] 500 Server Error for HTTP GET \"/api/v3/resource/SomeResult/slice?from=20240308034957&to=20240308035057\""
             );
 
-        Assert.Equal(correctLogEntry.Timestamp, logEntry.Timestamp);
-        Assert.Equal(correctLogEntry.ThreadId.ToString(), logEntry.ThreadId.ToString());
-        Assert.Equal(correctLogEntry.LogLevel.ToString(), logEntry.LogLevel.ToString());
-        Assert.Equal(correctLogEntry.Component.ToString(), logEntry.Component.ToString());
-        Assert.Equal(correctLogEntry.Message.ToString(), logEntry.Message.ToString());
+        Assert.Equal(correctLogEntry, logEntry);
     }
 
     [Fact]
@@ -75,7 +63,7 @@ public class LogLineParsertTest
 
         var logEntry = LogLineParser.ParseLogEntry(logLine);
 
-        var correctLogEntry = new LogEntry(
+        var correctLogEntry = LogEntry.Create(
             new DateTime(2021, 8, 1, 0, 0, 0, 0),
             "parallel - 8",
             "INFO",
@@ -83,11 +71,7 @@ public class LogLineParsertTest
             "query#25d67e17-2e01-4c75-9089-9f22a4707b70 completed with 0 rows"
             );
 
-        Assert.Equal(correctLogEntry.Timestamp, logEntry.Timestamp);
-        Assert.Equal(correctLogEntry.ThreadId.ToString(), logEntry.ThreadId.ToString());
-        Assert.Equal(correctLogEntry.LogLevel.ToString(), logEntry.LogLevel.ToString());
-        Assert.Equal(correctLogEntry.Component.ToString(), logEntry.Component.ToString());
-        Assert.Equal(correctLogEntry.Message.ToString(), logEntry.Message.ToString());
+        Assert.Equal(correctLogEntry, logEntry);
     }
 
     [Theory]
@@ -104,10 +88,6 @@ public class LogLineParsertTest
     {
         var logEntry = LogLineParser.ParseLogEntry(logLine);
 
-        Assert.Equal(LogEntry.Empty.Timestamp, logEntry.Timestamp);
-        Assert.Equal(LogEntry.Empty.ThreadId.ToString(), logEntry.ThreadId.ToString());
-        Assert.Equal(LogEntry.Empty.LogLevel.ToString(), logEntry.LogLevel.ToString());
-        Assert.Equal(LogEntry.Empty.Component.ToString(), logEntry.Component.ToString());
-        Assert.Equal(LogEntry.Empty.Message.ToString(), logEntry.Message.ToString());
+        Assert.Equal(LogEntry.Empty, logEntry);
     }
 }

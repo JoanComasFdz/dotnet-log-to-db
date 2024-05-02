@@ -1,12 +1,12 @@
 ﻿using Npgsql;
 
-namespace log_to_db_performance;
+namespace log_to_db_performance_functional;
 
 internal static class Database
 {
     private static readonly string masterConnectionString = "Host=127.0.0.1; Username=postgres; Password=postgres;";
 
-    private  static string ConnectionString => masterConnectionString + " Database=logscannerdotnet";
+    private static string ConnectionString => masterConnectionString + " Database=logscannerdotnet";
 
     public static void EnsureCreated()
     {
@@ -68,7 +68,7 @@ internal static class Database
         var conn = new NpgsqlConnection(ConnectionString);
         conn.Open();
         return conn;
-    }
+    }    
 
     public static int GetLogEntriesCount(string logFilePath)
     {

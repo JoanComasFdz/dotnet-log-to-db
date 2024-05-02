@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "log-to-db-performance": {
+    "log-to-db-ef": {
       "commandName": "Project",
       "commandLineArgs": "D:\\logs"
     }
