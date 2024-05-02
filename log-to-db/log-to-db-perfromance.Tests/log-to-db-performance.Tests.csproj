@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\log-to-db\log-to-db-performance.csproj" />
+    <ProjectReference Include="..\log-to-db-perfromance\log-to-db-performance.csproj" />
   </ItemGroup>
 
   <ItemGroup>

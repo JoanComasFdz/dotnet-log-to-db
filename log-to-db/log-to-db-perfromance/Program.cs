@@ -37,9 +37,9 @@ foreach (var logFilePath in logFiles)
 {
     try
     {
-        var logFileName = Path.GetFileName(logFilePath); 
+        var logFileName = Path.GetFileName(logFilePath);
         Console.WriteLine($"Processing file: {logFileName}");
-        
+
         var deletedEntries = Database.RemoveLogEntriesForFile(logFilePath);
         if (deletedEntries > 0)
         {
@@ -48,7 +48,7 @@ foreach (var logFilePath in logFiles)
 
         var cronoFile = Stopwatch.StartNew();
 
-        using var reader = new StreamReader(logFilePath);       
+        using var reader = new StreamReader(logFilePath);
         string? line;
         while ((line = reader.ReadLine()) != null)
         {

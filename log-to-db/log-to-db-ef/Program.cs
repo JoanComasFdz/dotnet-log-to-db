@@ -39,7 +39,7 @@ foreach (var logFilePath in logFiles)
 
         var deletedEntries = context.DeleteLogEntries(logFileName);
         if (deletedEntries > 0)
-        {            
+        {
             Console.WriteLine($"Removed {deletedEntries} entries already stored for for {logFilePath}.");
         }
 
