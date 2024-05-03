@@ -53,6 +53,11 @@ dotnet run "C:\path\to\log-folder"
 
 > Make sure you are in the correct directory before running the command.
 
+## Makig your own
+In order to make this application work with your own log files, you need to modify the `LogLineValidator` and `LogLineParser` to accomodate your log file format and needs.
+
+Sometimes, 1 log will contain new line characters and therefore be stored as multiple lines in the log file. In this case, you need to implement a mechanism to join those lines together before parsing them. I would recommend to use a new class `MultiLineJoiner` that will be responsible for joining the lines together (without new line characters), before being validated and parsed.
+
 ## Motivation
 Log files are still a tool that is used to troubleshoot issues. It is the daily life of plenty of developers to look at log files to understand what is happening in the system. Those files can be up to multiple gigabytes in size and contain millions of log entries.
 
@@ -64,6 +69,7 @@ This application is a simple example of how to read a log file and write the log
 
 Once in the DB, it is possible to query the log entries, filter them, and correlate them using a query language, wihch is more natural and easy to understand than custom algorithms looking for stuff up and down.
 
+6 years ago it was my first attempt at a log file to database ingestion application and although it worked, it was taking minutes to process ~2GB log files and it would take lots of memory. I wanted to revisit this problem and see if I could do better. I am very happy with the results, I have learned a lot in the process and I am happy to share it with everybody.
 
 ## Useful PostgreSQL commands
 
@@ -96,3 +102,8 @@ Clear the log table:
 ```bash
 docker exec logscanner-postgres psql -h 127.0.0.1 -U postgres -d logscannerdotnet -c "DELETE FROM log;"
 ```
+
+## Future work
+This solution just ingest logs for future analyisis using SQL queries. Those queries can prove to be very complex and time consuming to write.
+
+Nowadays log aggregation is a topic on itself, and one of the most used stacks is [Grafana Lok](https://github.com/grafana/loki). This is whay I will explore next, but to anlyze existing log files, not to connect live apps to it.
