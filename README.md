@@ -6,7 +6,9 @@ The solution contains 3 projects which all implement the same functionality but 
 - `log-to-db-performance-functional` - The second approach that is based on the performance approach, but attacks the problem in a more functional programming way.
 - `log-to-db-ef` - The third approach that uses Entity Framework Core and keeps a functional approach.
 
-Study the READNE.md files in each project to understand the differences between the approaches.
+The objective was to ingest as much data as possible, while keeping memory consumption stable (instead of growing with the number of log entries). This was achieved with a total memory consumption of 42MB to 52MB, regardles of the log file fize.
+
+Study the README.md files in each project to understand the differences between the approaches.
 
 ## Performance comparison
 
