@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "log-to-db-parsing": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\logs"
+    }
+  }
+}

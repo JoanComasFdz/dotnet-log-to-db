@@ -32,6 +32,8 @@ The following table shows the time it takes to read the log file and write the l
 | log-to-db-performance-functional| file2.log| 3.0s    |
 | log-to-db-ef                   | file1.log|  4.8s    |
 | log-to-db-ef                   | file2.log|  4.9s    |
+| log-to-db-parsing              | file1.log|  4.1s    |
+| log-to-db-parsing              | file2.log|  4.5s    |
 
 Conclusions:
 - Both full performance approach and the functional approach behave similarly in terms of performance.
@@ -104,6 +106,10 @@ docker exec logscanner-postgres psql -h 127.0.0.1 -U postgres -d logscannerdotne
 ```
 
 ## Future work
-This solution just ingest logs for future analyisis using SQL queries. Those queries can prove to be very complex and time consuming to write.
+This solution just ingest logs for future analyisis using SQL queries.
+
+Some the inmediate thing to do would be to develop a tool to query the logs with SQL.
+
+The drawback is that those queries can prove to be very complex and time consuming to write.
 
 Nowadays log aggregation is a topic on itself, and one of the most used stacks is [Grafana Lok](https://github.com/grafana/loki). This is whay I will explore next, but to anlyze existing log files, not to connect live apps to it.
